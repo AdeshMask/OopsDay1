@@ -1,7 +1,6 @@
 package com.bridgelabz;
 
-public class EmpWageComputation {
-
+class Calculations{
     static int wage_Per_Hour = 20;
     static final int FULL_DAY_HOURS = 8;
     static final int PART_TIME_HOURS = 4;
@@ -10,33 +9,31 @@ public class EmpWageComputation {
     static final int WORKING_DAYS_PER_MONTH = 20;
     static final int TOTAL_WORKING_HOURS_FOR_MONTH = 100;
 
-    static int isPartTime(int dailyWages,int totalWagesofMonth){
-        System.out.println("Employee is Present for Half Day ::");
-        dailyWages = wage_Per_Hour * PART_TIME_HOURS;
-        System.out.println(dailyWages);
-        return dailyWages;
-    }
+    public static void startCalculations(){
+        Wages wages = new Wages();
+        Prints prints = new Prints();
 
-    public static void main(String[] args) {
         int dailyWages = 0;
         double totalPresentDays = 0;
         int absentDays = 0;
         int totalWorkinHours = 0;
         int totalWagesofMonth = 0;
+        System.out.println();
         System.out.println("*-*-*-*-Welcome to Employee Wage Computation Problem-*-*-*-*");
         for (int i = 1; i <= WORKING_DAYS_PER_MONTH ; i++) {
             if (totalWorkinHours != TOTAL_WORKING_HOURS_FOR_MONTH) {
                 int attendance = (int) Math.floor(Math.random() * 3);
                 switch (attendance) {
-                    case IS_FULL_TIME:
-                        Wages wages = new Wages();                              //Class  Object Created
-                        wages.isFullTime(dailyWages,totalWagesofMonth);
+                    case IS_FULL_TIME://Class  Object Created
+                        wages.isFullTime();
+                        dailyWages = wages.isFullTime();
                         totalWagesofMonth = totalWagesofMonth + dailyWages;
                         totalPresentDays = totalPresentDays + 1;
                         totalWorkinHours = +totalWorkinHours + FULL_DAY_HOURS;
                         break;
                     case IS_PART_TIME:
-                        isPartTime(dailyWages,totalWagesofMonth);
+                        prints.isPartTime();
+                        dailyWages = Prints.isPartTime();
                         totalWagesofMonth = totalWagesofMonth + dailyWages;
                         totalPresentDays = totalPresentDays + 0.5;
                         totalWorkinHours = totalWorkinHours + PART_TIME_HOURS;
@@ -55,13 +52,31 @@ public class EmpWageComputation {
         System.out.println("Total Wages of the Month:: "+totalWagesofMonth);
     }
 }
-//Extended class EmpWageComputation
-class Wages extends EmpWageComputation{
-    static int isFullTime(int dailyWages,int totalWagesofMonth){
+//==============================================================================================
+
+class Wages extends Calculations {
+    public static int isFullTime(){
         System.out.println("Employee is Present ::");
-        dailyWages = wage_Per_Hour * FULL_DAY_HOURS;
+        int dailyWages = wage_Per_Hour * FULL_DAY_HOURS;
         System.out.println(dailyWages);
         return dailyWages;
 
     }
+}
+class Prints extends Calculations {
+    public static int isPartTime(){
+        System.out.println("Employee is Present for Half Day ::");
+        int dailyWages = wage_Per_Hour * PART_TIME_HOURS;
+        System.out.println(dailyWages);
+        return dailyWages;
+    }
+}
+
+//==========================================================================================
+public class EmpWageComputation {
+    public static void main(String[] args) {
+         Calculations calculations = new Calculations();
+        Calculations.startCalculations();
+    }
+
 }
